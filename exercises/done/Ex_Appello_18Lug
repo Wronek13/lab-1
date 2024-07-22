@@ -1,0 +1,22 @@
+//Scrivere una funzione in TS che prende come argomento un qualsiasi oggetto e restituisce una array contenente le stringhe dei nomi delle classi a cui appartiene l oggettp,
+dalla piu generale alla meno generale
+
+function catena_classi(o:Object) :string[] {
+
+  let ris: string[] = [];
+
+  while(o.constructor.name != "Object") {
+
+    
+
+    o = Object.getPrototypeOf(o);
+  
+    ris.unshift(o.constructor.name);
+  
+  }
+
+  
+
+  return ris;
+  
+}
