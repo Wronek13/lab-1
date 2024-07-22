@@ -1,0 +1,23 @@
+//Si scriva una funzione in ts che preso come argomento un oggetto o qualsiasi restituisce un array di stringhe che contiene le classi a cui appartiene o dalla più generale alla meno generale. 
+Per esempio se Multisetise estende Set, se do come argomento un istanza di Multiset la funzione restituisce ["Object", "Set", "Multiset"]
+
+
+function catena_classi(o:Object) :string[] {
+
+  let ris: string[] = [];
+
+  while(o.constructor.name != "Object") {
+
+    
+
+    o = Object.getPrototypeOf(o);
+  
+    ris.unshift(o.constructor.name);
+  
+  }
+
+  
+
+  return ris;
+  
+}
