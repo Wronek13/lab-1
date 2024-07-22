@@ -1,0 +1,23 @@
+//scrivere una funzione in ts che prende come argomento un qualsiasi oggetto e restituisce un array di stringhe che ha come elementi i nomi delle classi a cui appartiene o, 
+dalla piu generale alla meno generale. 
+
+
+function catena_classi(o:Object) :string[] {
+
+  let ris: string[] = [];
+
+  while(o.constructor.name != "Object") {
+
+    
+
+    o = Object.getPrototypeOf(o);
+  
+    ris.unshift(o.constructor.name);
+  
+  }
+
+  
+
+  return ris;
+  
+}
