@@ -1,0 +1,142 @@
+/*
+Si vuole implementare una classe TypeScript Matrix che fornisca l'implementazione di una matrice contenente elementi di tipo omogeneo insieme alla possibilità di eseguire un prodotto di Hadamard 
+ tra le due matrici. Il prodotto di Hadamard tra due matrici 
+ restituisce un nuova matrice 
+ in cui ciascun elemento è il prodotto degli elementi corrispondenti in 
+ e 
+, ovvero 
+.
+
+Nel nostro caso, per implementare il prodotto 
+ tra elementi di tipo generico (
+ e 
+), verrà passato al costruttore della classe una funzione 
+ che restituisce l'elemento 
+ che è il risultato del prodotto tra 
+ e 
+ (che avranno sempre lo stesso tipo).
+
+
+
+La classe deve implementare solo i seguenti campi pubblici:
+
+row: numero di righe della matrice
+col: numero di colonne della matrice
+La classe deve implementare i seguenti metodi pubblici:
+
+un costruttore, che prende come argomenti (in ordine): numero righe, numero colonne e la funzione prodF
+un metodo 
+ che inizializza la matrice mettendo in ogni posizione il valore 
+un metodo 
+ che restituisce l'elemento della matrice in posizione (i,j)
+un metodo 
+ che inserisce il valore 
+ in posizione (i,j) della matrice
+un metodo 
+ che restituisce una nuovo oggetto Matrix ottenuto dal prodotto di Hadamard tra l'oggetto matrice corrente e B. Se la matrice corrente e la matrice B non hanno la stessa dimensione 
+il metodo lancia un eccezione SizeError
+ (da definire adeguatamente).
+
+
+E' possibile implementare tutti i campi privati che si ritiene necessari (ma DEVONO essere privati).
+
+Come sempre, si curi di definire i tipi nella maniera più precisa possibile: l'uso di any
+ non è ammesso.
+*/
+
+
+
+
+
+class SizeError extends Error{}
+
+
+class Matrix<T> {
+
+    row: number;
+    col: number;
+    private prodotto: (a:T, b:T) => T;
+    private matr: T[][];
+
+    constructor(nr:number, nc:number, 
+    prodF:(a:T, b:T) => T ){
+        this.row = nr;
+        this.col = nc;
+        this.prodotto = prodF;
+        this.matr = [];
+        
+    
+    }
+
+    init(e:T):void {
+        let i:number;
+        let j:number;
+        
+        
+        for(i=0; i<this.row; i++){
+            this.matr.push([]);
+            for(j=0; j<this.col; j++){
+            this.matr[i].push(e);
+            }
+        }
+
+        return;
+    }
+        
+
+        
+
+    get_el(i:number, j:number): T{
+        
+       
+        return this.matr[i][j];
+    }
+
+
+
+    set_el(i:number, j:number, v:T):void {
+
+        
+
+        this.matr[i][j] = v;
+
+        return;
+
+
+    }
+
+
+    hadam_product(B: Matrix<T>): Matrix<T>{
+
+        if(this.row != B.row || this.col != B.col){
+            throw new SizeError();
+        }
+
+        var C:Matrix<T> = new Matrix<T>(this.row, this.col, this.prodotto);
+
+        let i:number;
+        let j:number;
+        
+        C.init(this.matr[0][0]);
+
+        for(i=0; i<C.row; i++){
+            
+            for(j=0; j<C.col; j++){
+
+               C.set_el(i, j, this.prodotto(this.matr[i][j], B.get_el(i, j)))
+             
+            }
+        }
+    
+        return C;
+    }
+
+
+}
+
+
+
+    
+
+
+
